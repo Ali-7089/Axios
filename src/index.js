@@ -1,13 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
+import axios from 'axios'
 import reportWebVitals from './reportWebVitals';
 
+axios.defaults.baseURL='https://jsonplaceholder.typicode.com'
+axios.defaults.headers.common['Authorization'] = 'chl beta ho ja tyaar!';
+
+
+
+axios.interceptors.request.use(req=>{
+  console.log(req)
+  return req
+},
+error=>{
+  return Promise.reject(error)
+})
+
+axios.interceptors.response.use(res=>{
+  console.log(res)
+  return res.data.splice(0,6)
+},
+error=>{
+  return Promise.reject(error)
+})
+
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+    <App />,
   document.getElementById('root')
 );
 
